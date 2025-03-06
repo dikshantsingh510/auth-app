@@ -2,7 +2,8 @@
 
 import { prisma } from "@/prisma/prisma";
 import { hash } from "bcryptjs";
-import StateInterface from "@/types/types";
+import StateInterface, { CustomError } from "@/types/types";
+import { signIn } from "@/auth";
 
 const signup = async (
   prevState: StateInterface,
@@ -44,4 +45,37 @@ const signup = async (
   return { success: "User created successfully" };
 };
 
-export { signup };
+const login = async (
+  prevState: StateInterface,
+  formData: FormData
+): Promise<StateInterface> => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!email || !password) return { error: "Email and password are required" };
+  try {
+    const userExists = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+    if (!userExists || !userExists.email) return { error: "User not found!" };
+
+    await signIn("credentials", {
+      email: userExists.email,
+      password: password,
+      redirect: false,
+    });
+
+    return { success: "Logged in successfully" };
+  } catch (error) {
+    const someError = error as CustomError;
+    console.log("...................", someError.message);
+
+    return {
+      error:
+        someError.message || "An unexpected error occurred while logging in",
+    };
+  }
+};
+export { signup, login };

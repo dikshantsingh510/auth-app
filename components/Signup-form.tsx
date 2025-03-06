@@ -1,10 +1,9 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-// import { signup } from "@/action/user";
 import React, { useActionState, useEffect } from "react";
 import { signup } from "@/actions/user";
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 const SignupForm = () => {
@@ -20,7 +19,7 @@ const SignupForm = () => {
     }
     if (state.success) {
       toast.success(state.success);
-      // redirect("/about");
+      redirect("/login");
     }
   }, [state]);
 

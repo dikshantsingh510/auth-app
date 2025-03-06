@@ -1,10 +1,12 @@
-
 // import { getSession } from "@/lib/getSession";
 
+import { auth } from "@/auth";
 import SignoutBtn from "@/components/signout-btn";
 
 export default async function About() {
   //  const session = await getSession();
+  const session = await auth();
+  console.log(session);
 
   return (
     <div className=" w-full min-h-[35rem] flex justify-center items-center">
