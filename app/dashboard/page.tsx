@@ -1,5 +1,6 @@
-// import NotAllowed from "@/components/not-allowed";
 import { getAllUsers } from "@/actions/user";
+import NotAllowed from "@/components/not-allowed";
+import { getSession } from "@/lib/getSession";
 import {
   Table,
   TableBody,
@@ -11,11 +12,11 @@ import {
 } from "@/components/ui/table";
 
 export default async function Dashboard() {
-  // if (session?.user.role !== "admin") {
-  //   return <NotAllowed />;
-  // }
+  const session = await getSession();
+  if (session?.user.role !== "ADMIN") {
+    return <NotAllowed />;
+  }
   const usersData = await getAllUsers();
-  console.log(usersData);
 
   return (
     <div className="w-full min-h-[35rem] flex justify-center items-center ">

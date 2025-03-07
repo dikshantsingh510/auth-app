@@ -15,7 +15,7 @@ const NotAllowed = () => {
             Not allowed
           </h1>
           <p className="mt-6 text-pretty text-lg font-medium text-muted-foreground sm:text-xl/8">
-            You are not allowed to visit Dashboard. It is for Admin Only.
+            You are not allowed to visit the Dashboard. It is for Admin Only.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-y-3 gap-x-6">
