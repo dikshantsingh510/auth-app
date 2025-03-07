@@ -3,7 +3,8 @@
 import { prisma } from "@/prisma/prisma";
 import { hash } from "bcryptjs";
 import StateInterface, { CustomError } from "@/types/types";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 const signup = async (
   prevState: StateInterface,
@@ -78,4 +79,9 @@ const login = async (
     };
   }
 };
-export { signup, login };
+
+const signout = async () => {
+  await signOut({ redirectTo: "/login" });
+  revalidatePath("/");
+};
+export { signup, login, signout };

@@ -1,13 +1,13 @@
-
+import { signout } from "@/actions/user";
 import { Button } from "./ui/button";
 
 const SignoutBtn = () => {
   return (
-    // <form>
-      <Button type="submit" className="rounded-full font-bold mx-3">
+    <form action={signout}>
+      <Button type="submit" variant="secondary" className="w-80 cursor-pointer">
         Logout
       </Button>
-    // </form>
+    </form>
   );
 };
 
