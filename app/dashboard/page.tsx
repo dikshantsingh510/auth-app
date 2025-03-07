@@ -1,8 +1,10 @@
 // import NotAllowed from "@/components/not-allowed";
+import { getAllUsers } from "@/actions/user";
 import {
   Table,
   TableBody,
   TableCaption,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -12,23 +14,26 @@ export default async function Dashboard() {
   // if (session?.user.role !== "admin") {
   //   return <NotAllowed />;
   // }
+  const usersData = await getAllUsers();
+  console.log(usersData);
+
   return (
     <div className="w-full min-h-[35rem] flex justify-center items-center ">
       <div className="w-[35rem]">
         <Table className="border">
-          {/* {usersData.data ? ( */}
-          <>
-            <TableCaption>A list of all the users</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead className="text-right">Created At</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {/* {usersData.data.map((user) => (
+          {usersData.data ? (
+            <>
+              <TableCaption>A list of all the users</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Name</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead className="text-right">Created At</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {usersData.data.map((user) => (
                   <TableRow className="capitalize" key={user.id}>
                     <TableCell className="font-medium">{user.name}</TableCell>
                     <TableCell>{user.role}</TableCell>
@@ -37,12 +42,12 @@ export default async function Dashboard() {
                       {new Date(user.createdAt).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
-                ))} */}
-            </TableBody>
-          </>
-          {/* ) : (
-             <TableCaption>{usersData.error}</TableCaption>
-           )} */}
+                ))}
+              </TableBody>
+            </>
+          ) : (
+            <TableCaption>{usersData.error}</TableCaption>
+          )}
         </Table>
       </div>
     </div>

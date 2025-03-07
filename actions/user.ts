@@ -84,4 +84,28 @@ const signout = async () => {
   await signOut({ redirectTo: "/login" });
   revalidatePath("/");
 };
-export { signup, login, signout };
+
+const getAllUsers = async () => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+    return {
+      data: users,
+      error: null,
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return {
+      data: null,
+      error: "Failed to fetch users",
+    };
+  }
+};
+export { signup, login, signout, getAllUsers };
